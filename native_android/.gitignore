@@ -1,0 +1,5 @@
+build/classes/
+build/classes.dex
+build/apk/
+build/debug.keystore
+build/tools/
