@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>벌떡 알람 ⏰ — 잠 깨우는 알람</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 메인 화면 -->
+  <main id="main" class="screen">
+    <header class="topbar">
+      <h1 class="logo">⏰ 벌떡 알람</h1>
+      <p class="clock" id="liveClock">00:00</p>
+      <p class="today" id="todayDate"></p>
+    </header>
+
+    <section class="alarms">
+      <div class="alarms-head">
+        <h2>내 알람</h2>
+        <button class="btn-add" id="addAlarmBtn" aria-label="알람 추가">＋</button>
+      </div>
+      <ul id="alarmList" class="alarm-list"></ul>
+      <p id="emptyHint" class="empty-hint">아직 알람이 없어요. ＋ 버튼으로 추가하세요.</p>
+    </section>
+
+    <footer class="footer-hint">
+      <p id="permHint"></p>
+      <p class="tip">💡 알람이 울리는 동안 화면이 꺼지지 않게 하려면 이 탭을 켜둔 채로 두세요.</p>
+    </footer>
+  </main>
+
+  <!-- 알람 편집 모달 -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-card">
+      <h2 id="editTitle">새 알람</h2>
+
+      <label class="field">
+        <span>시간</span>
+        <input type="time" id="alarmTime" value="07:00" />
+      </label>
+
+      <label class="field">
+        <span>이름</span>
+        <input type="text" id="alarmLabel" placeholder="예: 출근 준비" maxlength="20" />
+      </label>
+
+      <div class="field">
+        <span>반복</span>
+        <div class="days" id="dayPicker">
+          <button type="button" data-day="0">일</button>
+          <button type="button" data-day="1">월</button>
+          <button type="button" data-day="2">화</button>
+          <button type="button" data-day="3">수</button>
+          <button type="button" data-day="4">목</button>
+          <button type="button" data-day="5">금</button>
+          <button type="button" data-day="6">토</button>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>깨우기 미션</span>
+        <select id="missionType">
+          <option value="math">수학 문제 풀기 (추천)</option>
+          <option value="typing">문장 따라 입력하기</option>
+          <option value="tap">순서대로 버튼 누르기</option>
+          <option value="none">미션 없음 (그냥 끄기)</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>미션 횟수 <small>(여러 번 풀수록 더 확실히 깸)</small></span>
+        <select id="missionCount">
+          <option value="1">1번</option>
+          <option value="3" selected>3번</option>
+          <option value="5">5번</option>
+          <option value="7">7번 (극악)</option>
+        </select>
+      </label>
+
+      <label class="field check">
+        <input type="checkbox" id="vibrateToggle" checked />
+        <span>진동 사용 (모바일)</span>
+      </label>
+
+      <label class="field check">
+        <input type="checkbox" id="snoozeToggle" />
+        <span>스누즈 허용 (5분, 최대 1회)</span>
+      </label>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="deleteAlarmBtn">삭제</button>
+        <div class="spacer"></div>
+        <button class="btn-ghost" id="cancelEditBtn">취소</button>
+        <button class="btn-primary" id="saveAlarmBtn">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 알람 울림 화면 -->
+  <div id="ringScreen" class="ring-screen hidden">
+    <div class="ring-inner">
+      <p class="ring-time" id="ringTime">07:00</p>
+      <p class="ring-label" id="ringLabel">알람</p>
+      <p class="ring-sub">😴 미션을 풀어야 알람이 꺼져요!</p>
+
+      <div id="missionArea" class="mission-area"></div>
+
+      <button class="btn-snooze hidden" id="snoozeBtn">5분 더 자기 (1회)</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
